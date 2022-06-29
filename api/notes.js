@@ -1,45 +1,47 @@
 const tips = require('express').Router();
+const { json } = require('express');
 const { v4: uuidv4 } = require('uuid');
+const { fromString } = require('uuidv4');
 const {
-  getNotes,
-  saveNote,
-  deleteNote
-} = require('../public/assets/js/index')
+  readFromFile,
+  writeToFile,
+  readAndAppend,
+} = require('./helper.js')
 
 // GET Route for retrieving all the tips
-tips.get('/', (req, res) => {
-  getNotes('../db/db.json').then((data) => res.json(JSON.parse(data)));
+tips.get('/notes', (req, res) => {
+  readFromFile('db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
-// GET Route for a specific tip
-tips.get('/:tip_id', (req, res) => {
-  const tipId = req.params.tip_id;
-  getNotes('../db/db.json')
-    .then((data) => JSON.parse(data))
-    .then((json) => {
-      const result = json.filter((tip) => tip.tip_id === tipId);
-      return result.length > 0
-        ? res.json(result)
-        : res.json('No note with that ID');
-    });
-});
+// // GET Route for a specific tip
+// tips.get('/api/notes', (req, res) => {
+//   const tipId = req.params.tip_id;
+//   r('../db/db.json')
+//     .then((data) => JSON.parse(data))
+//     .then((json) => {
+//       const result = json.filter((tip) => tip.tip_id === tipId);
+//       return result.length > 0
+//         ? res.json(result)
+//         : res.json('No note with that ID');
+//     });
+// });
 
 // DELETE Route for a specific tip
-tips.delete('/:tip_id', (req, res) => {
-  const tipId = req.params.tip_id;
-  deleteNote('../db/db.json')
-    .then((data) => JSON.parse(data))
-    .then((json) => {
-      // Make a new array of all tips except the one with the ID provided in the URL
-      const result = json.filter((tip) => tip.tip_id !== tipId);
+// tips.delete(`/api/notes/:id`, (req, res) => {
+//   const tipId = req.params.tip_id;
+//   deleteNote('../db/db.json')
+//     .then((data) => JSON.parse(data))
+//     .then((json) => {
+//       // Make a new array of all tips except the one with the ID provided in the URL
+//       const result = json.filter((tip) => tip.tip_id !== tipId);
 
-      // Save that array to the filesystem
-      saveNote('../db/db.json', result);
+//       // Save that array to the filesystem
+//       saveNote('../db/db.json', result);
 
-      // Respond to the DELETE request
-      res.json(`Note ${tipId} has been deleted 🗑️`);
-    });
-});
+//       // Respond to the DELETE request
+//       res.json(`Note ${tipId} has been deleted 🗑️`);
+//     });
+// });
 
 // POST Route for a new note
 tips.post('/notes', (req, res) => {
@@ -54,8 +56,13 @@ tips.post('/notes', (req, res) => {
       text,
       tip_id: uuidv4(),
     };
-
-    saveNote(newTip, '../db/db.json');
+    readFromFile('db/db.json').then(data => {
+      const savedInfo = JSON.parse(data);
+      console.log(newTip);
+      savedInfo.push(newTip);
+      writeToFile('db/db.json', savedInfo);
+    });
+    
     res.json(`Note added successfully 🚀`);
   } else {
     res.error('Error in adding Note');
