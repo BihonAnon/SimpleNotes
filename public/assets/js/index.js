@@ -25,7 +25,9 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
-const getNotes = () =>
+
+//THE ONES YOU NEED
+const getNotes = () => //Simil
   fetch('/api/notes', {
     method: 'GET',
     headers: {
@@ -50,6 +52,9 @@ const deleteNote = (id) =>
     },
   });
 
+
+  //END OF THE ONES YOU NEED
+  // CEHCK MINIPROJECT && 20 Stu-DataPersistance && Modular Routin
 const renderActiveNote = () => {
   hide(saveNoteBtn);
 
