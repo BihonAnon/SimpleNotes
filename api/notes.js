@@ -51,16 +51,16 @@ tips.post('/notes', (req, res) => {
   const { title, text } = req.body;
 
   if (req.body) {
-    const newTip = {
+    const newTip = { // creates a new note with << that design
       title,
       text,
       tip_id: uuidv4(),
     };
     readFromFile('db/db.json').then(data => {
-      const savedInfo = JSON.parse(data);
+      const savedInfo = JSON.parse(data); // parse db.json
       console.log(newTip);
-      savedInfo.push(newTip);
-      writeToFile('db/db.json', savedInfo);
+      savedInfo.push(newTip); // add new tip to parsed db.json
+      writeToFile('db/db.json', savedInfo); // writes new savedInfo new array to db.json
     });
     
     res.json(`Note added successfully 🚀`);
