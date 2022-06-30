@@ -1,9 +1,24 @@
-# Byron-s-Notes
+# SIMPLENOTES
 
-Build Backend for front end so you can server index.html and notes.html
-Build API routes to
-  - Add a note
-  - Get all Notes
-  - Get an Individual Note
+Simple notes is a application for taking simple notes.
 
-BONUS - DELETE A NOTE
+## Instalization
+
+Just open the deployed app on Heroku
+
+## Description
+
+It's a note taking app pretty straight forard.
+
+## Utalizing 
+
+HTML, CSS, JavaScript and Express.
+
+## Usage
+
+You can add a note using the save note button in the top right hand corner. 
+
+## Links
+[Heroku Deployment (Broken)](https://simple-notes-092831.herokuapp.com/)
+
+[GitHub Link](https://github.com/YourAverageCat/SimpleNotes)
