@@ -5,8 +5,7 @@ const util = require('util');
 const apiRoutes = require('./api/notes')
 // Helper Method for generating unique Ids
 // const uuid = require('./assets/js/uuid');
-
-const PORT = 3001;
+const PORT = process.env.port || 3001;
 
 const app = express();
 
