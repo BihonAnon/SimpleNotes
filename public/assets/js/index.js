@@ -25,7 +25,9 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
-const getNotes = () =>
+// require('../../../api/notes')
+//THE ONES YOU NEED
+const getNotes = () => //Simil
   fetch('/api/notes', {
     method: 'GET',
     headers: {
@@ -50,6 +52,9 @@ const deleteNote = (id) =>
     },
   });
 
+
+  //END OF THE ONES YOU NEED
+  // CEHCK MINIPROJECT && 20 Stu-DataPersistance && Modular Routin
 const renderActiveNote = () => {
   hide(saveNoteBtn);
 
@@ -157,7 +162,7 @@ const renderNoteList = async (notes) => {
   if (jsonNotes.length === 0) {
     noteListItems.push(createLi('No saved Notes', false));
   }
-
+console.log(jsonNotes);
   jsonNotes.forEach((note) => {
     const li = createLi(note.title);
     li.dataset.note = JSON.stringify(note);
